@@ -5,7 +5,7 @@
  * Time: 10:21
  */
 
-namespace Manager;
+namespace Nano;
 
 
 class Manager
@@ -147,11 +147,11 @@ class Manager
     {
         $welcome = <<<WELCOME
 \033[36m
- _____
-|_   _| __ ___  ___
-  | || '__/ _ \/ _ \
-  | || | |  __/  __/
-  |_||_|  \___|\___|
+ _   _                   
+| \ | | __ _ _ __   ___  
+|  \| |/ _` | '_ \ / _ \ 
+| |\  | (_| | | | | (_) |
+|_| \_|\__,_|_| |_|\___/
 
 A multi process manager for PHP
 
