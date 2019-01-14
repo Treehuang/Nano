@@ -1,0 +1,14 @@
+{
+    "name": "tree/easy-process-manager",
+    "description": "A multi process manager for PHP",
+    "type": "project",
+    "keywords": ["php", "process", "manager"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "tree",
+            "email": "treehuang0@gmail.com"
+        }
+    ],
+    "require": {}
+}
