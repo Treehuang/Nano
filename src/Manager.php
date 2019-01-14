@@ -7,7 +7,6 @@
 
 namespace Nano;
 
-
 class Manager
 {
     /**
