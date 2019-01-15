@@ -12,6 +12,13 @@ use Exception;
 class ProcessException
 {
     /**
+     * 标志,是否第一次加载
+     *
+     * @var bool
+     */
+    private static $sign = true;
+
+    /**
      * 日志方法
      *
      * @var array
@@ -44,11 +51,6 @@ class ProcessException
 
         $msg = self::decorate($method, $data['msg']);
         error_log($msg, 3, self::$logPath . '.' . date('Y-m-d', time()) . '.log');
-
-        if ($method == 'error')
-        {
-            exit;
-        }
     }
 
     /**
@@ -65,32 +67,25 @@ class ProcessException
         $memoryUsage = round(memory_get_usage()/1024, 2) . ' kb';
 
         $default = [
-            $time,
-            $rank,
-            $pid,
-            $memoryUsage
+            'pid'    =>  $pid,
+            'time'   =>  $time,
+            'rank'   =>  $rank,
+            'memory' =>  $memoryUsage
         ];
 
-        if (!isset($msg['from']) || empty($msg['from']))
-        {
-            $default[] = 'worker';
-            unset($msg['from']);
-        }
+        $default['from'] = $msg['from'];
+        unset($msg['from']);
 
-        $msg = array_merge($default, $msg);
         $tmp = '';
-        foreach ($msg as $k => $v)
+        if (self::$sign == true)
         {
-            if ($k === 0)
-            {
-                $tmp = "{$v}";
-                continue;
-            }
-
-            $tmp .= " | {$v}";
+            $tmp = PHP_EOL;
+            self::$sign = false;
         }
 
-        $tmp .= PHP_EOL;
+        $tmp .= '[' . $default['time'] . ']' . '[' . $default['rank'] . ']';
+        $tmp .= ($default['rank'] == 'info') ? ' [' . $default['from'] . ']' : '['. $default['from'] . ']';
+        $tmp .= ' [' . $default['pid'] . ']' . ' ' . $msg['extra'] . PHP_EOL;
 
         return $tmp;
     }
