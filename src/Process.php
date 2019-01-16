@@ -310,13 +310,10 @@ abstract class Process
         ];
         ProcessException::info($msg);
 
-        if (!unlink($this->pipePath))
-        {
-            ProcessException::error($msg);
+        if (!unlink($this->pipePath)) {
+            shell_exec("rm -rf {$this->pipePath}");
         }
-
-        shell_exec("rm -rf {$this->pipePath}");
-
+        
         return true;
     }
 
