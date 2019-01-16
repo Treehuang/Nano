@@ -227,7 +227,7 @@ WELCOME;
                 try {
                     // 实例化worker
                     $worker = new Worker();
-
+                    $worker->setProcessName('nano: worker process');
                     // 创建管道
                     $worker->pipeMake();
                     // 挂起
@@ -250,8 +250,9 @@ WELCOME;
             default:
                 try {
                     // 父进程生成子进程池
-                    $worker = new Worker(['pid' => $pid, 'type' => 'master=>worker']);
+                    $worker = new Worker(['pid' => $pid, 'type' => 'master']);
                     $this->workers[$pid] = $worker;
+                    $worker->setProcessName('nano: master process');
                 }catch (Exception $e) {
                     $line = $e->getLine();
                     $file = $e->getFile();
@@ -335,7 +336,7 @@ WELCOME;
                     ProcessException::info([
                         'msg' => [
                             'from'  => $this->master->type,
-                            'estra' => "result: $res kill -9 {$worker->pid}"
+                            'extra' => "result: $res kill -9 {$worker->pid}"
                         ]
                     ]);
                 }

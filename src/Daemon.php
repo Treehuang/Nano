@@ -22,7 +22,6 @@ class Daemon extends Process
                 'extra' => "daemon instance create"
             ]
         ]);
-
     }
 
     /**
@@ -35,16 +34,14 @@ class Daemon extends Process
     public function check(Manager $manager)
     {
         // 检查信号-进程池有没有信号
-        if (!empty($manager->$waitSignalProcessPool['signal'])) {
+        if (!empty($manager->waitSignalProcessPool['signal'])) {
             return;
         }
 
         // 获取当前系统运行的子进程数
-        $num = intval(shell_exec("pstree -p {$manager->master->pid} | wc -l"));
-
+        $num = intval(shell_exec("pstree -p {$manager->master->pid} | grep php | wc -l"));
         // 检查当前系统运行的子进程数
         $diff = $manager->startNum - $num;
-
         if ($diff > 0) {
             // 创建子进程
             $manager->execFork($diff);

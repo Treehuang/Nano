@@ -335,8 +335,8 @@ abstract class Process
      *
      * @return void
      */
-    protected function setProcessName()
+    public function setProcessName($title = '')
     {
-
+        cli_set_process_title($title);
     }
 }
