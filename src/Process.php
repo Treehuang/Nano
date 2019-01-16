@@ -184,7 +184,7 @@ abstract class Process
     public function pipeWrite($signal = '')
     {
         // 打开管道
-        $pipe = fopen($this->pipePath, 'r+');
+        $pipe = fopen($this->pipePath, 'w');
         if (!$pipe)
         {
             ProcessException::error([
