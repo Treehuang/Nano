@@ -1,0 +1,81 @@
+#!/bin/bash
+
+CURR_DIR=$( cd "$(dirname "${BASH_SOURCE[0]}")"; pwd -P )
+NANO_EXE=${CURR_DIR}/../nanov
+
+ppid=$(pgrep -f 'nanov: master')
+
+case $1 in
+"start")
+	if [[ ${ppid} != '' ]]; then
+		echo -e "nano is already running..."; exit
+	fi
+	
+	phpversion=$(php -v | grep 'PHP 7')
+	if [[ ${phpversion} == '' ]]; then
+		echo -e "please use php 7+"; exit
+	fi
+	
+	php ${NANO_EXE} $2
+	
+	;;
+
+"reload")
+	if [[ ${ppid} == '' ]]; then
+		echo -e "nano is not running..."; exit
+	fi
+	
+	kill -s SIGUSR1 ${ppid}
+	if [[ $? -ne 0 ]]; then
+		echo -e "reload signal be sent fail..."; exit
+	fi
+	
+	echo -e "reload signal be sent success..."
+	
+	;;
+
+"quit")
+	if [[ ${ppid} == '' ]]; then
+		echo -e "nano is not running..."; exit
+	fi
+	
+	kill -s SIGUSR2 ${ppid}
+	if [[ $? -ne 0 ]]; then
+		echo -e "quit signal be sent fail..."; exit
+	fi
+
+	echo -e "quit signal be sent success..."
+
+	;;
+
+"stop")
+	if [[ ${ppid} == '' ]]; then
+        echo -e "nano is not running..."; exit
+    fi
+
+    kill -s SIGTERM ${ppid}
+    if [[ $? -ne 0 ]]; then
+        echo -e "stop signal be sent fail..."; exit
+    fi
+
+    echo -e "stop signal be sent success..."
+
+    ;;
+*)
+
+echo -e "
+    \033[36m Usage \033[0m:
+        nanov <method> <value>
+
+    \033[36m Example \033[0m:
+        nanov start/quit/stop/reload
+       \033[33m start 4 worker process \033[0m: nanov start 4
+
+    \033[36m Params mean \033[0m:
+       \033[33m stop   \033[0m:  forcefully exit
+       \033[33m quit   \033[0m:  gracefully exit
+       \033[33m start  \033[0m:  start the nanov
+       \033[33m reload \033[0m:  gracefully quit&start the worker process
+"
+
+esac
