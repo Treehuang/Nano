@@ -8,6 +8,7 @@
 namespace Nano;
 
 use Closure;
+use Nano\ProcessException;
 
 class Worker extends Process
 {
@@ -25,8 +26,64 @@ class Worker extends Process
         ]);
     }
 
-    protected function hangup(Closure $closure)
+    public function hangup(Closure $closure)
     {
-        // TODO: Implement hangup() method.
+        while (true) {
+            // 检查是否有退出标志
+            if ($this->workerExitFlag) {
+                $this->workerExit();
+            }
+
+            // 当前运行时间大于进程最大运行时间
+            if (self::$currentExecuteTimes >= self::$maxExecuteTimes) {
+                $this->workerExit();
+            }
+
+            // 读管道
+            if ($this->signal = $this->pipeRead()) {
+                $this->dispatchSig();
+            }
+
+            ++self::$currentExecuteTimes;
+
+            usleep(self::$hangupLoopMicrotime);
+        }
+    }
+
+    /**
+     * 退出子进程
+     *
+     * @return void
+     */
+    private function workerExit()
+    {
+        $this->clearPipe();
+
+        ProcessException::info([
+            'msg' => [
+                'from'  => $this->type,
+                'extra' => "signal: $this->signal  worker process exit"
+            ]
+        ]);
+
+        exit;
+    }
+
+    /**
+     * 分发信号
+     *
+     * @return void
+     */
+    private function dispatchSig()
+    {
+        switch ($this->signal) {
+            case 'stop':
+            case 'reload':
+                $this->workerExitFlag = true;
+                break;
+
+            default:
+                break;
+        }
     }
 }

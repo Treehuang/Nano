@@ -230,7 +230,8 @@ WELCOME;
 
                     // 创建管道
                     $worker->pipeMake();
-
+                    // 挂起
+                    $worker->hangup($this->workBusinessClosure);
                 }catch (Exception $e) {
                     $line = $e->getLine();
                     $file = $e->getFile();
