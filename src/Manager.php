@@ -324,7 +324,11 @@ WELCOME;
                     $worker->pipeWrite('stop');
                 }
 
-                break;
+                // 清除master的管道
+                $this->master->clearPipe();
+                // kill -9 master process
+                echo "quit..." . PHP_EOL;
+                exit; break;
 
             // SIGINT, SIGTERM, 立刻终止
             case $this->signalSupport['int']:
