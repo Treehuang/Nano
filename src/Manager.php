@@ -5,14 +5,14 @@
  * Time: 10:21
  */
 
-namespace Nano;
+namespace Nanov;
 
 use Closure;
 use Exception;
-use Nano\Master;
-use Nano\Worker;
-use Nano\Daemon;
-use Nano\ProcessException;
+use Nanov\Master;
+use Nanov\Worker;
+use Nanov\Daemon;
+use Nanov\ProcessException;
 
 class Manager
 {
@@ -171,11 +171,11 @@ class Manager
     {
         $welcome = <<<WELCOME
 \033[36m
- _   _                   
-| \ | | __ _ _ __   ___  
-|  \| |/ _` | '_ \ / _ \ 
-| |\  | (_| | | | | (_) |
-|_| \_|\__,_|_| |_|\___/
+ _   _                        
+| \ | | __ _ _ __   _____   __
+|  \| |/ _` | '_ \ / _ \ \ / /
+| |\  | (_| | | | | (_) \ V / 
+|_| \_|\__,_|_| |_|\___/ \_/  
 
 A multi process manager for PHP
 
@@ -227,7 +227,7 @@ WELCOME;
                 try {
                     // 实例化worker
                     $worker = new Worker();
-                    $worker->setProcessName('nano: worker process');
+                    $worker->setProcessName('nanov: worker process');
                     // 创建管道
                     $worker->pipeMake();
                     // 挂起
@@ -252,7 +252,7 @@ WELCOME;
                     // 父进程生成子进程池
                     $worker = new Worker(['pid' => $pid, 'type' => 'master']);
                     $this->workers[$pid] = $worker;
-                    $worker->setProcessName('nano: master process');
+                    $worker->setProcessName('nanov: master process');
                 }catch (Exception $e) {
                     $line = $e->getLine();
                     $file = $e->getFile();

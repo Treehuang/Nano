@@ -5,10 +5,10 @@
  * Time: 16:05
  */
 
-namespace Nano;
+namespace Nanov;
 
 use Closure;
-use Nano\ProcessException;
+use Nanov\ProcessException;
 
 abstract class Process
 {
@@ -45,14 +45,14 @@ abstract class Process
      *
      * @var string
      */
-    protected $pipeNamePrefix = 'nano_pipe_';
+    protected $pipeNamePrefix = 'nanov_pipe_';
 
     /**
      * 管道存放路径
      *
      * @var string
      */
-    protected $pipeDir = '/tmp/nano_pipe/';
+    protected $pipeDir = '/tmp/nanov_pipe/';
 
     /**
      * 管道生成路径

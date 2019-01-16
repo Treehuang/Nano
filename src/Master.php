@@ -5,11 +5,11 @@
  * Time: 9:28
  */
 
-namespace Nano;
+namespace Nanov;
 
 use Closure;
-use Nano\Process;
-use Nano\ProcessException;
+use Nanov\Process;
+use Nanov\ProcessException;
 
 class Master extends Process
 {

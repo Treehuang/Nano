@@ -5,7 +5,7 @@
  * Time: 15:11
  */
 
-namespace Nano;
+namespace Nanov;
 
 use Exception;
 
@@ -30,7 +30,7 @@ class ProcessException
      *
      * @var string
      */
-    private static $logPath = '/tmp/nano';
+    private static $logPath = '/tmp/nanov';
 
     /**
      * the magic __callStatic function

@@ -15,7 +15,7 @@
 
     "autoload": {
         "psr-4": {
-            "Nano\\": "src/"
+            "Nanov\\": "src/"
         }
     }
 }

@@ -5,10 +5,10 @@
  * Time: 22:12
  */
 
-namespace Nano;
+namespace Nanov;
 
 use Closure;
-use Nano\Manager;
+use Nanov\Manager;
 
 class Daemon extends Process
 {
@@ -27,7 +27,7 @@ class Daemon extends Process
     /**
      * 检查系统的子进程数，如没达到设置的启动数，则进行创建达到启动数
      *
-     * @param \Nano\Manager $manager
+     * @param \Nanov\Manager $manager
      *
      * @return void
      */

@@ -5,10 +5,10 @@
  * Time: 16:54
  */
 
-namespace Nano;
+namespace Nanov;
 
 use Closure;
-use Nano\ProcessException;
+use Nanov\ProcessException;
 
 class Worker extends Process
 {
