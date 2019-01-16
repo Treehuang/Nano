@@ -272,25 +272,16 @@ abstract class Process
 
         // 读取管道
         $msg = fread($workerPipe, $this->readPipeType);
-        var_dump($msg);exit;
-        if (!$msg)
+
+        if (!empty($msg))
         {
-            ProcessException::error([
+            ProcessException::info([
                 'msg' => [
                     'from'  => $this->type,
-                    'extra' => "pipe read {$this->pipePath} error",
+                    'extra' => "pipe read '{$msg}' {$this->pipePath}",
                 ]
             ]);
-
-            return;
         }
-
-        ProcessException::info([
-            'msg' => [
-                'from'  => $this->type,
-                'extra' => "pipe read '{$msg}' {$this->pipePath}",
-            ]
-        ]);
 
         return $msg;
     }
