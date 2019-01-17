@@ -160,7 +160,7 @@ class Manager
 | |\  | (_| | | | | (_) \ V / 
 |_| \_|\__,_|_| |_|\___/ \_/  
 
-The process manager start successfully!
+The process manager start success!
 \033[0m
 WELCOME;
         echo $welcome;
@@ -304,7 +304,6 @@ WELCOME;
                 // 清除master的管道
                 $this->master->clearPipe();
                 // kill -9 master process
-                echo "quit..." . PHP_EOL;
                 exit; break;
 
             // SIGINT, SIGTERM, 立刻终止
@@ -325,7 +324,6 @@ WELCOME;
                 // 清除master的管道
                 $this->master->clearPipe();
                 // kill -9 master process
-                echo "stop..." . PHP_EOL;
                 exit; break;
 
             default:
