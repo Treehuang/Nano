@@ -16,7 +16,7 @@ case $1 in
 		echo -e "please use php 7+"; exit
 	fi
 	
-	php ${NANO_EXE} $2
+	php ${NANO_EXE}
 	
 	;;
 
@@ -63,19 +63,23 @@ case $1 in
     ;;
 *)
 
-echo -e "
-    \033[36m Usage \033[0m:
-        nanov <method> <value>
+echo -e "\033[36m _   _
+| \ | | __ _ _ __   _____   __
+|  \| |/ _\ | '_  \/   \ \ / /
+| |\  | (_| | | | | (_) \ V /
+|_| \_|\__,_|_| |_|\___/ \_/
+ 
+\033[36mUsage \033[0m:
+   nanov <method> <value>
 
-    \033[36m Example \033[0m:
-        nanov start/quit/stop/reload
-       \033[33m start 4 worker process \033[0m: nanov start 4
+\033[36mExample \033[0m:
+   nanov start/quit/stop/reload
+   \033[33mstart 4 worker process \033[0m: nanov start 4
 
-    \033[36m Params mean \033[0m:
-       \033[33m stop   \033[0m:  forcefully exit
-       \033[33m quit   \033[0m:  gracefully exit
-       \033[33m start  \033[0m:  start the nanov
-       \033[33m reload \033[0m:  gracefully quit&start the worker process
+\033[36mParams mean \033[0m:
+   \033[33mstop   \033[0m: forcefully exit
+   \033[33mquit   \033[0m: gracefully exit
+   \033[33mstart  \033[0m: start the nanov
+   \033[33mreload \033[0m: gracefully quit&start the worker process
 "
-
 esac

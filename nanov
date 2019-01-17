@@ -4,8 +4,6 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 use Nanov\Manager;
 
-$config = isset($argv[1]) ? ['worker_num' => $argv[1]] : [];
-
-$instance = new Manager($config, function(){
+$instance = new Manager(function(){
                 echo 'hello world';
             });
