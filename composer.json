@@ -1,5 +1,5 @@
 {
-    "name": "tree/Nanov",
+    "name": "tree/nanov",
     "description": "A multi process manager for PHP",
     "type": "project",
     "keywords": ["php", "process", "manager"],
