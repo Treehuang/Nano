@@ -30,7 +30,7 @@ class ProcessException
      *
      * @var string
      */
-    private static $logPath = __DIR__ . '/../var/log/';
+    private static $logPath = __DIR__ . '/../var/log';
 
     /**
      * the magic __callStatic function
@@ -47,10 +47,8 @@ class ProcessException
             throw new Exception('log method not support', 500);
         }
 
-        self::$logPath = isset($data['path']) ? $data['path'] : self::$logPath;
-
         $msg = self::decorate($method, $data['msg']);
-        error_log($msg, 3, self::$logPath . 'nanov.' . date('Y-m-d', time()) . '.log');
+        error_log($msg, 3, self::$logPath . '/nanov.' . date('Y-m-d', time()) . '.log');
     }
 
     /**
