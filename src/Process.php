@@ -52,7 +52,7 @@ abstract class Process
      *
      * @var string
      */
-    protected $pipeDir = '/tmp/nanov_pipe/';
+    protected $pipeDir = __DIR__ . '/../var/nanov_pipe/';
 
     /**
      * 管道生成路径

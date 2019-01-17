@@ -26,11 +26,11 @@ class ProcessException
     private static $methodSupport = ['info', 'error', 'debug'];
 
     /**
-     * 日志路径
+     * 日志路径(当前项目var目录下的log)
      *
      * @var string
      */
-    private static $logPath = '/tmp/nanov';
+    private static $logPath = __DIR__ . '/../var/log/';
 
     /**
      * the magic __callStatic function
@@ -50,7 +50,7 @@ class ProcessException
         self::$logPath = isset($data['path']) ? $data['path'] : self::$logPath;
 
         $msg = self::decorate($method, $data['msg']);
-        error_log($msg, 3, self::$logPath . '.' . date('Y-m-d', time()) . '.log');
+        error_log($msg, 3, self::$logPath . 'nanov.' . date('Y-m-d', time()) . '.log');
     }
 
     /**
