@@ -65,7 +65,7 @@ class Configure
             echo 'nanov.ini does not exist' . PHP_EOL; exit;
         }
 
-       $this->config = parse_ini_file($this->nanov_ini);
+       $this->config = parse_ini_file($this->nanov_ini, true);
 
         if(!$this->config) {
             echo 'Parsing nanov.ini fail' . PHP_EOL; exit;
