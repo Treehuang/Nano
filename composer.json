@@ -17,5 +17,11 @@
         "psr-4": {
             "Nanov\\": "src/"
         }
+    },
+
+    "scripts": {
+        "post-create-project-cmd":[
+            "echo export PATH=$PATH:$(pwd)/bin >> ~/.profile"
+        ]
     }
 }
