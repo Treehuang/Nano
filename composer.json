@@ -20,7 +20,7 @@
     },
 
     "scripts": {
-        "post-create-project-cmd":[
+        "post-root-project-cmd":[
             "echo export PATH=$PATH:$(pwd)/bin >> ~/.profile"
         ]
     }
