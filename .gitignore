@@ -1,2 +1,5 @@
 .idea
 /vendor/
+
+/var/log/
+/var/nanov_pipe/

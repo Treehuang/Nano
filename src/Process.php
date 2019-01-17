@@ -8,6 +8,7 @@
 namespace Nanov;
 
 use Closure;
+use Nanov\Configure;
 use Nanov\ProcessException;
 
 abstract class Process
@@ -115,6 +116,8 @@ abstract class Process
      */
     public function __construct($config = [])
     {
+        $config = Configure::getConfig();
+
         if (empty($this->pid))
         {
             // 获取进程pid
@@ -127,7 +130,8 @@ abstract class Process
         $this->pipePath = $this->pipeDir . $this->pipeName;
 
         // 睡眠时间
-        self::$hangupLoopMicrotime = isset($config['hangup_loop_microtime']) ? $config['hangup_loop_microtime'] : self::$hangupLoopMicrotime;
+        self::$hangupLoopMicrotime = isset($config['worker']['w_hangup_loop_microtime']) && !empty($config['worker']['w_hangup_loop_microtime']) ?
+            $config['worker']['w_hangup_loop_microtime'] : self::$hangupLoopMicrotime;
     }
 
     /**

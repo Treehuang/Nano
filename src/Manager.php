@@ -12,17 +12,11 @@ use Exception;
 use Nanov\Master;
 use Nanov\Worker;
 use Nanov\Daemon;
+use Nanov\Configure;
 use Nanov\ProcessException;
 
 class Manager
 {
-    /**
-     * 操作系统
-     *
-     * @var string
-     */
-    private $os = '';
-
     /**
      * 主进程对象
      *
@@ -97,7 +91,7 @@ class Manager
      *
      * @var array
      */
-    private $env = [];
+    private $config = [];
 
     /**
      * 支持的信号
@@ -121,19 +115,16 @@ class Manager
     private static $hangupLoopMicrotime = 200000;
 
 
-    public function __construct($config = [], Closure $closure)
+    public function __construct(Closure $closure)
     {
-        // 加载环境配置项
-        $this->loadEnv();
-
-        // 配置时区
-        date_default_timezone_set($this->env['config']['timezone'] ?? 'Asia/shanghai');
+        // 获取环境配置
+        $this->config = Configure::getConfig();
 
         // 欢迎界面
         $this->welcome();
 
-        // 设置启动的基本参数
-        $this->configure($config);
+        // 设置基本参数
+        $this->configure();
 
         // 实例化master
         $this->master = new Master();
@@ -154,13 +145,6 @@ class Manager
         $this->hangup();
     }
 
-    /**
-     * 加载环境配置文件
-     */
-    private function loadEnv()
-    {
-        $this->env = parse_ini_file(__DIR__ . '/../.env', true);
-    }
 
     /**
      * welcome
@@ -170,17 +154,13 @@ class Manager
     public function welcome()
     {
         $welcome = <<<WELCOME
-\033[36m
- _   _                        
+\033[36m _   _                        
 | \ | | __ _ _ __   _____   __
 |  \| |/ _` | '_ \ / _ \ \ / /
 | |\  | (_| | | | | (_) \ V / 
 |_| \_|\__,_|_| |_|\___/ \_/  
 
-A multi process manager for PHP
-
-Version: 0.2
-
+The process manager start successfully!
 \033[0m
 WELCOME;
         echo $welcome;
@@ -191,22 +171,19 @@ WELCOME;
      *
      * @param array $config
      */
-    public function configure($config = [])
+    public function configure()
     {
-        // 设置操作系统
-        $this->os = $config['os'] ?? $this->os;
-
-        // 设置用户密码
-        $this->userPassword = $config['password'] ?? '';
+        // 配置时区
+        date_default_timezone_set(isset($this->config['time']['timezone']) && !empty($this->config['time']['timezone']) ?
+            $this->config['time']['timezone'] : 'Asia/shanghai');
 
         // 设置启动的进程数
-        $this->startNum = isset($config['worker_num']) ? (int)$config['worker_num'] : $this->startNum;
+        $this->startNum = isset($this->config['worker']['worker_num']) && !empty($this->config['worker']['worker_num']) ?
+            (int)$this->config['worker']['worker_num'] : $this->startNum;
 
-        // 设置进程挂起时间
-        self::$hangupLoopMicrotime = $config['hangup_loop_microtime'] ?? self::$hangupLoopMicrotime;
-
-        // 设置管道文件路径
-        $this->pipeDir = $config['pipe_dir'] ?? '';
+        // 设置master进程挂起时间
+        self::$hangupLoopMicrotime = isset($this->config['master']['m_hangup_loop_microtime']) && !empty($this->config['master']['m_hangup_loop_microtime']) ?
+            $this->config['master']['m_hangup_loop_microtime'] : self::$hangupLoopMicrotime;
     }
 
     /**

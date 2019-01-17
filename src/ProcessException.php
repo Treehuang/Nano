@@ -8,6 +8,7 @@
 namespace Nanov;
 
 use Exception;
+use Nanov\Configure;
 
 class ProcessException
 {
@@ -41,10 +42,17 @@ class ProcessException
      */
     public static function __callStatic($method = '', $data = [])
     {
+        $config = Configure::getConfig();
+
         $data = $data[0];
         if(!in_array($method, self::$methodSupport))
         {
             throw new Exception('log method not support', 500);
+        }
+
+        self::$logPath = isset($config['log']['log_path']) && !empty($config['log']['log_path']) ? $config['log']['log_path'] : self::$logPath;
+        if (!is_dir(self::$logPath)) {
+            mkdir(self::$logPath);
         }
 
         $msg = self::decorate($method, $data['msg']);

@@ -61,7 +61,6 @@ class Configure
     protected function loadConfig()
     {
         if (!file_exists($this->nanov_ini)) {
-            var_dump($this->nanov_ini);
             echo 'nanov.ini does not exist' . PHP_EOL; exit;
         }
 
