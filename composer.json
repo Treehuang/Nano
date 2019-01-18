@@ -10,15 +10,12 @@
             "email": "treehuang0@gmail.com"
         }
     ],
-
     "require": {},
-
     "autoload": {
         "psr-4": {
             "Nanov\\": "src/"
         }
     },
-
     "scripts": {
         "post-create-project-cmd": [
             "chmod +x $(pwd)/bin/nanov",
