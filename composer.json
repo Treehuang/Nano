@@ -20,8 +20,9 @@
     },
 
     "scripts": {
-        "post-root-project-cmd":[
-            "echo export PATH=$PATH:$(pwd)/bin >> ~/.profile"
+        "post-create-project-cmd": [
+            "chmod +x $(pwd)/bin/nanov",
+            "echo export PATH=$PATH:$(pwd)/bin >> ~/.bashrc"
         ]
     }
 }
