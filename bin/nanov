@@ -18,7 +18,7 @@ case $1 in
 
 	# 将脚本放到子进程执行，控制台退出
 	php ${NANO_EXE}&
-	sleep 0.09; exit
+	sleep 0.07; exit
 	;;
 
 "reload")
